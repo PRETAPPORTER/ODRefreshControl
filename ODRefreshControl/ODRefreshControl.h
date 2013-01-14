@@ -8,7 +8,7 @@
 // https://github.com/Sephiroth87/ODRefreshControl
 //
 
-#import <UIKit/UIKit.h>
+
 #import <QuartzCore/QuartzCore.h>
 
 @interface ODRefreshControl : UIControl {
