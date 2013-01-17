@@ -53,12 +53,11 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
 
 - (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity
 {
-  self = [super initWithFrame:CGRectMake(0, -(kTotalViewHeight + scrollView.contentInset.top) + 44, scrollView.frame.size.width, kTotalViewHeight)];
-  
+    self = [super initWithFrame:CGRectMake(0, -(kTotalViewHeight + scrollView.contentInset.top) + 44.0f, scrollView.frame.size.width, kTotalViewHeight)];
   if (self) {
     self.scrollView = scrollView;
     self.originalContentInset = scrollView.contentInset;
-    
+  
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [scrollView addSubview:self];
     [scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
