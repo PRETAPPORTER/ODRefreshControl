@@ -53,7 +53,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
 
 - (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity
 {
-    self = [super initWithFrame:CGRectMake(0, -(kTotalViewHeight + scrollView.contentInset.top), scrollView.frame.size.width, kTotalViewHeight)];
+    self = [super initWithFrame:CGRectMake(0, -(kTotalViewHeight + scrollView.contentInset.top) +44, scrollView.frame.size.width, kTotalViewHeight)];
     
     if (self) {
         self.scrollView = scrollView;
@@ -240,6 +240,9 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
             if (offset >= 0) {
                 // Don't draw if the control is not visible
                 dontDraw = YES;
+            }
+            else {
+                 self.layer.opacity = -offset/44.0f;
             }
         }
         if (offset > 0 && _lastOffset > offset && !self.scrollView.isTracking) {
