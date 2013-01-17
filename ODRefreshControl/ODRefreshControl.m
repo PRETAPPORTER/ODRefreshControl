@@ -242,7 +242,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
                 dontDraw = YES;
             }
             else {
-                 self.layer.opacity = -offset/44.0f;
+                 self.layer.opacity = -offset / 44.0f;
             }
         }
         if (offset > 0 && _lastOffset > offset && !self.scrollView.isTracking) {
