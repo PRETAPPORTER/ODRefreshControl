@@ -47,14 +47,14 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
   return a + (b - a) * p;
 }
 
-- (id)initInScrollView:(UIScrollView *)scrollView withYOffset:(CGFloat)yOffset
+- (id)initInScrollView:(UIScrollView *)scrollView 
 {
-  return [self initInScrollView:scrollView activityIndicatorView:nil withYOffset:yOffset];
+  return [self initInScrollView:scrollView activityIndicatorView:nil ];
 }
 
-- (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity withYOffset:(CGFloat)yOffset
+- (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity 
 {
-    self = [super initWithFrame:CGRectMake(0, -(kTotalViewHeight + scrollView.contentInset.top) + yOffset, scrollView.frame.size.width, kTotalViewHeight)];
+    self = [super initWithFrame:CGRectMake(0, -kTotalViewHeight, scrollView.frame.size.width, kTotalViewHeight)];
   if (self) {
     self.scrollView = scrollView;
     self.originalContentInset = scrollView.contentInset;
@@ -169,7 +169,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
   if ([keyPath isEqualToString:@"contentInset"]) {
     if (!_ignoreInset) {
       self.originalContentInset = [[change objectForKey:@"new"] UIEdgeInsetsValue];
-      self.frame = CGRectMake(0, -(kTotalViewHeight + self.scrollView.contentInset.top), self.scrollView.frame.size.width, kTotalViewHeight);
+      self.frame = CGRectMake(0, -kTotalViewHeight, self.scrollView.frame.size.width, kTotalViewHeight);
     }
     return;
   }
@@ -435,13 +435,14 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
     // This allows for the refresh control to clean up the observer,
     // in the case the scrollView is released while the animation is running
     __block UIScrollView *blockScrollView = self.scrollView;
+
     [UIView animateWithDuration:0.4 animations:^{
-      _ignoreInset = YES;
-      [blockScrollView setContentInset:self.originalContentInset];
-      _ignoreInset = NO;
       _activity.alpha = 0;
       _activity.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1);
+      _ignoreInset = YES;
+      [blockScrollView setContentInset:self.originalContentInset];
     } completion:^(BOOL finished) {
+      _ignoreInset = NO;
       [_shapeLayer removeAllAnimations];
       _shapeLayer.path = nil;
       _shapeLayer.shadowPath = nil;
@@ -450,11 +451,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
       _arrowLayer.path = nil;
       [_highlightLayer removeAllAnimations];
       _highlightLayer.path = nil;
-      // We need to use the scrollView somehow in the end block,
-      // or it'll get released in the animation block.
-      _ignoreInset = YES;
-      [blockScrollView setContentInset:self.originalContentInset];
-      _ignoreInset = NO;
+      blockScrollView = nil;
     }];
   }
 }

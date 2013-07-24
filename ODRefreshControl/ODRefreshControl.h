@@ -30,10 +30,10 @@
 @property (nonatomic, assign) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, strong) UIColor *activityIndicatorViewColor; // iOS5 or more
 
-- (id)initInScrollView:(UIScrollView *)scrollView withYOffset:(CGFloat)yOffset;
+- (id)initInScrollView:(UIScrollView *)scrollView;
 
 // use custom activity indicator
-- (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity withYOffset:(CGFloat)yOffset;
+- (id)initInScrollView:(UIScrollView *)scrollView activityIndicatorView:(UIView *)activity ;
 
 // Tells the control that a refresh operation was started programmatically
 - (void)beginRefreshing;
